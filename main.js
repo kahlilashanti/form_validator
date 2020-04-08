@@ -30,42 +30,30 @@ function isValidEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+//check required fields
+function checkRequired(inputArr) {
+    //loop through the input array and do the check on each one
+    inputArr.forEach(function (input) {
+        //all high order methods take in a function
+        if (input.value.trim() === '') {
+            console.log(input.id)
+            showError(input, `${getFieldName(input)} is required`);
+        } else {
+            showSuccess(input);
+        }
+    });
+
+}
+
+function getFieldName(input) {
+    // return input.id.toUpperCase(); //this capitalizes the whole word
+    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 //event listeners
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-    // console.log('submit')
-    // console.log(username)
-    //gives us the element username
-    // console.log(username.value)
-    //gives us the value of the element
 
-    if (username.value === '') {
-        // alert('username is required');
-        showError(username, 'username is required')
-    } else {
-        showSuccess(username);
-    }
+    checkRequired([username, email, password, password2]);
 
-    if (email.value === '') {
-        // alert('username is required');
-        showError(email, 'email is required')
-    } else if (!isValidEmail(email.value)) {
-        showError(email, 'email format is not valid')
-    } else {
-        showSuccess(email);
-    }
-
-    if (password.value === '') {
-        // alert('username is required');
-        showError(password, 'password is required')
-    } else {
-        showSuccess(password);
-    }
-
-    if (password2.value === '') {
-        // alert('username is required');
-        showError(password2, 'please re-enter your password')
-    } else {
-        showSuccess(password2);
-    }
-})
+});
